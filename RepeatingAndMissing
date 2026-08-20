@@ -1,0 +1,31 @@
+class Solution {
+    public int[] findMissingRepeatingNumbers(int[] nums) {
+
+        int n = nums.length;
+
+        long sumN = (long) n * (n + 1) / 2;
+        long squareSumN = (long) n * (n + 1) * (2 * n + 1) / 6;
+
+        long sum = 0;
+        long squareSum = 0;
+
+        for (int num : nums) {
+            sum += num;
+            squareSum += (long) num * num;
+        }
+
+        // x = repeating number
+        // y = missing number
+
+        long diff = sum - sumN;                 // x - y
+        long squareDiff = squareSum - squareSumN; // x² - y²
+
+        // x² - y² = (x-y)(x+y)
+        long sumXY = squareDiff / diff;        // x + y
+
+        long repeating = (diff + sumXY) / 2;
+        long missing = sumXY - repeating;
+
+        return new int[]{(int) repeating, (int) missing};
+    }
+}
